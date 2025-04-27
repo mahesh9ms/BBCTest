@@ -1,0 +1,64 @@
+Manual Test Cases:
+
+URL: https://www.bbc.co.uk/
+
+Feature: Comment Posting for a over 13 user
+  As a logged-in BBC user
+  I want to post comments on articles
+  So that I can share my thoughts with others
+
+Scenario: TC01 - User enters text within the 400 character limit on comment box
+  Given I am a logged-in BBC user on an article page with comments section enabled,
+  And the comment textbox is empty,
+  When I enter 399 characters in the comment textbox,
+  And the Post button should be enabled,
+  And Cancel buttons should be enabled,
+  And the character count should display "399/400",
+  When I click on the Post button,
+  Then my comment should be posted successfully.
+  
+Scenario: TC02 - User enters text exactly the 400 character limit on comment box
+  Given I am a logged-in BBC user on an article page with comments section enabled,
+  And the comment textbox is empty,
+  When I enter 400 characters in the comment textbox,
+  And the Post button should be enabled,
+  And Cancel buttons should be enabled,
+  And the character count should display "0/400",
+  When I click on the Post button,
+  Then my comment should be posted successfully.
+  
+Scenario: TC03 User attempts to enter more than 400 characters limit on comment box
+  Given I am a logged-in BBC user on an article page with comments section enabled,
+  And the comment textbox is empty,
+  When I enter more than 401 characters in the comment textbox,
+  And the Post button should be disabled,
+  And Cancel button should be enabled,
+  And the character count should display "-1/400",
+  When I click on the Cancel button,
+  Then the comment textbox should be cleared.
+  
+Scenario: TC04 User attempts to enter more than 400 characters limit on comment box then delete extra characters
+  Given I am a logged-in BBC user on an article page with comments section enabled,
+  And the comment textbox is empty,
+  When I enter more than 400 characters in the comment textbox,
+  And the Post button should be disabled,
+  And Cancel button should be enabled,
+  And the character count should display "-1/400",
+  And user deletes the additional characters,
+  Then the Post button should be enabled,
+  When I click on the Post button,
+  Then my comment should be posted successfully.
+  
+Scenario: TC05 Post Cancel Buttons must not be displayed when there is no text entered in the comment box
+  Given I am a logged-in BBC user on an article page with comments section enabled,
+  And the comment textbox is empty,
+  Then the Post and Cancel buttons should not be displayed.
+  
+Scenario: TC06 Non logged in users must not be able to comment
+  Given I navigated to an article page that has comments section enabled,
+  When  I click comments icon to enter text,
+  Then  User should see a message prompting me to "Sign in to comment, reply, and react.".
+  
+
+  
+  
